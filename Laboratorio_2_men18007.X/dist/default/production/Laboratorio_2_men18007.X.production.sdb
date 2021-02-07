@@ -11,14 +11,18 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"46 D:\Mis Archivos\UVG\Año 4\Ciclo 1\ELECTRONICA DIGITAL 2\Semana 4\Lab 2\Laboratorio_2_men18007.X\CODIGO_ADC.c
+"48 D:\Mis Archivos\UVG\Año 4\Ciclo 1\ELECTRONICA DIGITAL 2\Semana 4\Lab 2\Laboratorio-2\Laboratorio_2_men18007.X\CODIGO_ADC.c
 [v _main main `(v  1 e 1 0 ]
-"65
+"72
 [v _setup setup `(v  1 e 1 0 ]
-"80
+"87
 [v _count_up count_up `(v  1 e 1 0 ]
-"86
+"93
 [v _count_down count_down `(v  1 e 1 0 ]
+"99
+[v _PBinario PBinario `(v  1 e 1 0 ]
+"103
+[v _Alarma Alarma `(v  1 e 1 0 ]
 "228 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
 [s S26 . 1 `uc 1 RB0 1 0 :1:0 
@@ -37,6 +41,14 @@
 [v _PORTC PORTC `VEuc  1 e 1 @7 ]
 "414
 [v _PORTE PORTE `VEuc  1 e 1 @9 ]
+[s S77 . 1 `uc 1 RE0 1 0 :1:0 
+`uc 1 RE1 1 0 :1:1 
+`uc 1 RE2 1 0 :1:2 
+`uc 1 RE3 1 0 :1:3 
+]
+"427
+[u S82 . 1 `S77 1 . 1 0 ]
+[v _PORTEbits PORTEbits `VES82  1 e 1 @9 ]
 "1478
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1540
@@ -47,25 +59,37 @@
 [v _ANSEL ANSEL `VEuc  1 e 1 @392 ]
 "3449
 [v _ANSELH ANSELH `VEuc  1 e 1 @393 ]
-"33 D:\Mis Archivos\UVG\Año 4\Ciclo 1\ELECTRONICA DIGITAL 2\Semana 4\Lab 2\Laboratorio_2_men18007.X\CODIGO_ADC.c
-[v _counter counter `uc  1 e 1 0 ]
-"46
+"33 D:\Mis Archivos\UVG\Año 4\Ciclo 1\ELECTRONICA DIGITAL 2\Semana 4\Lab 2\Laboratorio-2\Laboratorio_2_men18007.X\CODIGO_ADC.c
+[v _counter_Bin counter_Bin `uc  1 e 1 0 ]
+"34
+[v _counter_ADC counter_ADC `uc  1 e 1 0 ]
+"48
 [v _main main `(v  1 e 1 0 ]
 {
-"60
+"67
 } 0
-"65
+"72
 [v _setup setup `(v  1 e 1 0 ]
 {
-"75
+"82
 } 0
-"80
+"87
 [v _count_up count_up `(v  1 e 1 0 ]
 {
-"84
+"91
 } 0
-"86
+"93
 [v _count_down count_down `(v  1 e 1 0 ]
 {
-"90
+"97
+} 0
+"99
+[v _PBinario PBinario `(v  1 e 1 0 ]
+{
+"101
+} 0
+"103
+[v _Alarma Alarma `(v  1 e 1 0 ]
+{
+"109
 } 0

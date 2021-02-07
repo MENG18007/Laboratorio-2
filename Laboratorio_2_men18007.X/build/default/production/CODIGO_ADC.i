@@ -2511,7 +2511,8 @@ extern __bank0 __bit __timeout;
 
 
 
-char counter = 0;
+char counter_Bin = 0;
+char counter_ADC = 0;
 
 
 
@@ -2520,6 +2521,7 @@ void setup(void);
 void count_up(void);
 void count_down(void);
 void PBinario (void);
+void Alarma (void);
 
 
 
@@ -2529,13 +2531,18 @@ void main(void) {
     setup();
 
     while (1){
-        if (PORTBbits.RB1 == 1)
+        if (PORTBbits.RB1 == 1){
             count_up();
-        if (PORTBbits.RB2 == 1)
+            PBinario();
+        }
+        if (PORTBbits.RB2 == 1){
             count_down();
+            PBinario();
+        }
+        if (counter_ADC == counter_Bin){
+            Alarma();
+        }
     }
-
-
 
     return;
 }
@@ -2552,7 +2559,7 @@ void setup(void) {
     PORTB = 0;
     TRISC = 0;
     PORTC = 0;
-
+    counter_ADC = 3;
 }
 
 
@@ -2560,16 +2567,24 @@ void setup(void) {
 
 void count_up(void){
     _delay((unsigned long)((100)*(8000000/4000.0)));
-    counter += 1;
-    PORTC++;
+    counter_Bin += 1;
+
 }
 
 void count_down(void){
     _delay((unsigned long)((100)*(8000000/4000.0)));
-    counter -= 1;
-    PORTC--;
+    counter_Bin -= 1;
+
 }
 
 void PBinario(void){
-    PORTC = counter;
+    PORTC = counter_Bin;
+}
+
+void Alarma(void){
+    PORTEbits.RE2 = 1;
+    _delay((unsigned long)((400)*(8000000/4000.0)));
+    counter_Bin = 0;
+    PORTEbits.RE2 = 0;
+    PORTC = 0;
 }

@@ -30,7 +30,8 @@
 //******************************************************************************
 // VARIABLES
 //******************************************************************************
-char counter = 0;
+char counter_Bin = 0;
+char counter_ADC = 0;
 
 //******************************************************************************
 // VOIDS
@@ -39,6 +40,7 @@ void setup(void);
 void count_up(void);
 void count_down(void);
 void PBinario (void);
+void Alarma (void);
 
 //******************************************************************************
 // CICLO PRINCIPAL
@@ -48,13 +50,18 @@ void main(void) {
     setup();
     
     while (1){
-        if (PORTBbits.RB1 == 1)
+        if (PORTBbits.RB1 == 1){
             count_up();         // Aumentamos la cuenta del contador binario
-        if (PORTBbits.RB2 == 1)
+            PBinario();
+        }
+        if (PORTBbits.RB2 == 1){
             count_down();       // Decrementamos la cuenta del contador binario
+            PBinario();
+        }
+        if (counter_ADC == counter_Bin){
+            Alarma();
+        }
     }
-    
-//    PBinario();
     
     return;
 }
@@ -71,7 +78,7 @@ void setup(void) {
     PORTB = 0;
     TRISC = 0;
     PORTC = 0;              // Especificamos entradas y salidas
-
+    counter_ADC = 3;
 }
 //******************************************************************************
 // FUNCIONES
@@ -79,16 +86,24 @@ void setup(void) {
 
 void count_up(void){
     __delay_ms(100);
-    counter += 1;          // Se incrementa la cuenta del contador binario
-    PORTC++;
+    counter_Bin += 1;          // Se incrementa la cuenta del contador binario
+//    PORTC++;
 }
 
 void count_down(void){
     __delay_ms(100);
-    counter -= 1;          // Se decrementa la cuenta del contador binario
-    PORTC--;
+    counter_Bin -= 1;          // Se decrementa la cuenta del contador binario
+//    PORTC--;
 }
 
 void PBinario(void){
-    PORTC = counter;
+    PORTC = counter_Bin;
+}
+
+void Alarma(void){
+    PORTEbits.RE2 = 1;
+    __delay_ms(400);
+    counter_Bin = 0;
+    PORTEbits.RE2 = 0;
+    PORTC = 0;
 }
