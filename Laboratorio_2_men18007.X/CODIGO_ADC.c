@@ -41,6 +41,7 @@ void count_up(void);
 void count_down(void);
 void PBinario (void);
 void Alarma (void);
+void ADC_Init(void);
 
 //******************************************************************************
 // CICLO PRINCIPAL
@@ -48,6 +49,7 @@ void Alarma (void);
 void main(void) {
     
     setup();
+    ADC_Init();
     
     while (1){
         if (PORTBbits.RB1 == 1){
@@ -79,6 +81,10 @@ void setup(void) {
     TRISC = 0;
     PORTC = 0;              // Especificamos entradas y salidas
     counter_ADC = 3;
+}
+
+void ADC_Init(void){
+    
 }
 //******************************************************************************
 // FUNCIONES
