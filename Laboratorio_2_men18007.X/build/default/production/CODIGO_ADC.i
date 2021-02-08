@@ -2513,11 +2513,13 @@ extern __bank0 __bit __timeout;
 
 char counter_Bin = 0;
 char counter_ADC = 0;
+char BIT_ALARM = 0;
 
 
 
 
 void setup(void);
+void ADC_In(void);
 void count_up(void);
 void count_down(void);
 void PBinario (void);
@@ -2527,7 +2529,6 @@ void Alarma (void);
 
 
 void main(void) {
-
     setup();
 
     while (1){
@@ -2539,8 +2540,14 @@ void main(void) {
             count_down();
             PBinario();
         }
-        if (counter_ADC == counter_Bin){
-            Alarma();
+        if(ADCON0bits.GO_DONE == 0){
+            ADCON0bits.GO_DONE = 1;
+
+        }
+        if (BIT_ALARM == 1){
+            if (counter_ADC == counter_Bin){
+                Alarma();
+            }
         }
     }
 
@@ -2554,13 +2561,27 @@ void setup(void) {
     TRISE = 0;
     PORTE = 0;
     ANSEL = 0;
-    ANSELH = 0;
     TRISB = 0b00000110;
     PORTB = 0;
     TRISC = 0;
     PORTC = 0;
     counter_ADC = 3;
+    BIT_ALARM = 0;
+    ADC_In();
 }
+
+void ADC_In(void){
+    ADCON1 = 0X00;
+    ADCON0bits.ADCS1 = 0;
+    ADCON0bits.ADCS0 = 1;
+    ADCON0bits.CHS3 = 1;
+    ADCON0bits.CHS2 = 1;
+    ADCON0bits.CHS1 = 0;
+    ADCON0bits.CHS0 = 0;
+    ADCON0bits.GO_DONE = 0;
+    ADCON0bits.ADON = 1;
+}
+
 
 
 
@@ -2568,13 +2589,12 @@ void setup(void) {
 void count_up(void){
     _delay((unsigned long)((100)*(8000000/4000.0)));
     counter_Bin += 1;
-
+    BIT_ALARM = 1;
 }
 
 void count_down(void){
     _delay((unsigned long)((100)*(8000000/4000.0)));
     counter_Bin -= 1;
-
 }
 
 void PBinario(void){

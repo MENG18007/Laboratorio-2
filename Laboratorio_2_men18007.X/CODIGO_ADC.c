@@ -32,24 +32,23 @@
 //******************************************************************************
 char counter_Bin = 0;
 char counter_ADC = 0;
+char BIT_ALARM = 0;
 
 //******************************************************************************
 // VOIDS
 //******************************************************************************
 void setup(void);
+void ADC_In(void);
 void count_up(void);
 void count_down(void);
 void PBinario (void);
 void Alarma (void);
-void ADC_Init(void);
 
 //******************************************************************************
 // CICLO PRINCIPAL
 //******************************************************************************
 void main(void) {
-    
     setup();
-    ADC_Init();
     
     while (1){
         if (PORTBbits.RB1 == 1){
@@ -60,8 +59,14 @@ void main(void) {
             count_down();       // Decrementamos la cuenta del contador binario
             PBinario();
         }
-        if (counter_ADC == counter_Bin){
-            Alarma();
+        if(ADCON0bits.GO_DONE == 0){
+            ADCON0bits.GO_DONE = 1;
+//            counter_ADC = ADRESH;
+        }
+        if (BIT_ALARM == 1){
+            if (counter_ADC == counter_Bin){
+                Alarma();
+            }
         }
     }
     
@@ -75,17 +80,27 @@ void setup(void) {
     TRISE = 0;
     PORTE = 0;
     ANSEL = 0;
-    ANSELH = 0;
     TRISB = 0b00000110;
     PORTB = 0;
     TRISC = 0;
     PORTC = 0;              // Especificamos entradas y salidas
     counter_ADC = 3;
+    BIT_ALARM = 0;
+    ADC_In();
 }
 
-void ADC_Init(void){
-    
+void ADC_In(void){
+    ADCON1 = 0X00;
+    ADCON0bits.ADCS1 = 0;
+    ADCON0bits.ADCS0 = 1;
+    ADCON0bits.CHS3 = 1;
+    ADCON0bits.CHS2 = 1;
+    ADCON0bits.CHS1 = 0;
+    ADCON0bits.CHS0 = 0;
+    ADCON0bits.GO_DONE = 0;
+    ADCON0bits.ADON = 1;
 }
+
 //******************************************************************************
 // FUNCIONES
 //******************************************************************************
@@ -93,13 +108,12 @@ void ADC_Init(void){
 void count_up(void){
     __delay_ms(100);
     counter_Bin += 1;          // Se incrementa la cuenta del contador binario
-//    PORTC++;
+    BIT_ALARM = 1;
 }
 
 void count_down(void){
     __delay_ms(100);
     counter_Bin -= 1;          // Se decrementa la cuenta del contador binario
-//    PORTC--;
 }
 
 void PBinario(void){
