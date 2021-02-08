@@ -2540,14 +2540,12 @@ void main(void) {
             count_down();
             PBinario();
         }
-        if(ADCON0bits.GO_DONE == 0){
-            ADCON0bits.GO_DONE = 1;
 
-        }
-        if (BIT_ALARM == 1){
-            if (counter_ADC == counter_Bin){
-                Alarma();
-            }
+
+
+
+        if (counter_ADC == counter_Bin){
+            Alarma();
         }
     }
 
@@ -2565,9 +2563,8 @@ void setup(void) {
     PORTB = 0;
     TRISC = 0;
     PORTC = 0;
-    counter_ADC = 3;
-    BIT_ALARM = 0;
-    ADC_In();
+    counter_ADC = 10;
+
 }
 
 void ADC_In(void){
